@@ -1,0 +1,54 @@
+
+# 【Terraform 関連】
+# ①プラグインフォルダ（terraform initで作成される）
+.terraform/
+
+# ②インフラの現在の状態（機密情報が含まれるため絶対NG）
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+
+# ③変数設定ファイル（パスワード等を書く場所）
+*.tfvars
+*.tfvars.json
+
+# ④セキュリティ（絶対公開禁止）
+*.pem
+*.pub
+
+# ⑤実行ファイル（terraform.exe 本体）
+*.exe
+
+# ⑥ログファイル
+*.log
+crash.log
+
+
+
+# 【Python / Django 関連】
+
+# ①コンパイルされたキャッシュファイル
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ②ローカルデータベース（SQLite3）
+db.sqlite3
+
+# ③環境変数ファイル（AWSキーやシークレットキーを隠す場所）
+.env
+
+
+#【AWS 認証情報と機密情報（AWSのシークレットキーなど）】
+.aws/
+credentials
+access_token
+
+
+# 【OS / エディタ 関連 (Windows/Mac/VSCode)】
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
