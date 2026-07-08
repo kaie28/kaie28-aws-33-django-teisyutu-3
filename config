@@ -1,17 +1,17 @@
 
 ##これは見本です。
-#【補足】HostName(★本物のIP)と IdentityFile(★本物のSSHキー) を入力することで、「SSH接続のスムーズな設定」と「内装構築の通信を安定させる」　ファイルとして機能することが出来る。
+#【補足】「SSH接続のスムーズな設定」と「内装構築の通信を安定させる」機能が可能。
 
 
 
-#　1　【SSH(22番)接続の設定に関する説明書】　→ ※ 複数人での使用時に、「SSH接続の設定」を迷わずスムーズに完了させるための説明書
-Host django-aws　　　　　　　　　　　　　　　#←宛名のニックネーム
-    HostName YOUR_EC2_PUBLIC_IP　　　　　　#←ネット上　住所のダミー　(★使用時は本物のIPを入れる)
-    User ec2-user　　　　　　　　　　　　　 #←部屋に入る(ログイン)するための名前
-    IdentityFile "~/.ssh/your-key.pem"　　#←VPCのドアを開けるための　SSHキーのダミー　(★使用時は本物のSSHキーを入れる)
+#　1　【SSH(22番)接続の設定に関する説明書】　
+Host django-aws　　　　　　　　　　　　　　　  　　　　　　　　#←宛名のニックネーム
+    HostName YOUR_EC2_PUBLIC_IP　　　　　　  　　　　　　　　#←ネット上　住所のダミー　(★使用時は本物のIPを入れる)
+    User ec2-user　　　　　　　　　　　　　   　　　　　　　　#←部屋に入る(ログイン)するための名前
+    IdentityFile "~/.ssh/your-key.pem"　　  　　　　　　　　#←VPCのドアを開けるための　SSHキーのダミー　(★使用時は本物のSSHキーを入れる)
 
 
  # 2、 【「内装の電波を切らさない」心臓マッサージ設定】
-    ServerAliveInterval 15   #←15秒ごとに「生きてる？」と自動で22番の内装へ電波を送る
-    ServerAliveCountMax 3     #←3回電波が返ってこなくても我慢して接続を維持
-    TCPKeepAlive yes          #←OS(土台)の電波を確認する
+    ServerAliveInterval 15   　　　　　　　　　　　　　　　　#←15秒ごとに「生きてる？」と自動で22番の内装へ電波を送る
+    ServerAliveCountMax 3     　　　　 　　　　　　　　　　　#←3回電波が返ってこなくても我慢して接続を維持
+    TCPKeepAlive yes          　　　　 　　　　　　　　　　　#←OS(土台)の電波を確認する
