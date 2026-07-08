@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action =''method='post'>{% csrf_token %}
+    <p>タイトル: {{ form.title }}</p>
+    <p>メモ: {{ form.memo }}</p>
+    <p>優先度: {{ form.priority }}</p>
+    <p>期限: <input type="date" name="duedate" value="{{ form.duedate.value|default:'' }}"></p>
+
+    <input type='submit' value='create'>
+</form>
+{% endblock content %}

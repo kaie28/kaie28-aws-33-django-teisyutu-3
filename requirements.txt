@@ -1,0 +1,9 @@
+Django==5.1.4
+asgiref==3.11.1
+sqlparse==0.5.1
+psycopg2-binary==2.9.10
+django-environ
+python-dotenv
+python-dotenv
+python-dotenv
+python-dotenv

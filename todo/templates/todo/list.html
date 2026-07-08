@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3">TODOリスト一覧</h1>
+    </div>
+
+<div class="list-group shadow-sm">
+    {% for item in object_list %}
+    <a href="{% url 'detail' item.pk %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <div>                                                 ###
+            <strong class="{% if item.priority == 'high' %}
+            text-danger
+            {% elif item.priority == 'normal' %}
+            text-warning
+            {% else %}
+            text-primary
+            {% endif %}
+            ">
+            {{ item.title}}</strong>
+
+            <div class="small text-muted text-truncate" style="max-width: 300px;">
+                {{ item.memo }}
+            </div>
+        </div>
+        <span class="badge bg-secondary rounded-pill">詳細 ></span>
+    </a>
+    {% empty %}
+    <div class="alert alert-info">
+        タスクはまだありません。新しいタスクを追加しましょう！
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

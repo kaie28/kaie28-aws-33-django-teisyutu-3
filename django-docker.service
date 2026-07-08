@@ -1,0 +1,44 @@
+#Dockerを全自動にするための命令書作成
+
+[Unit]    #1,サービス自体の基本情報や、起動する前提条件を記述する
+
+#1-1,DjangoをDockerで動かすアプリの自動起動設定の説明書き（名前）を付ける命令
+Description=Django Docker Compose Application
+
+#1-2,Docker自体が絶対に起動せよ」という強制的な依存関係を指定する命令
+Requires=docker.service
+
+#1-3,Dockerが完全起動『後』に →Djangoアプリを起動しろ」という順番守りの命令
+After=docker.service
+
+
+[Service]  #2,Djangoアプリを具体的に『どう起動し、どう止めるか』の実行コマンドを下記に記述する。
+
+#2-1 起動コマンド（ExecStart）を1回ポチッと実行したら、システム側の見張り業務はそこで完了とみなせ」の指示。
+Type=oneshot
+
+#2-2 コマンドの実行後も、「Djangoアプリは裏で動き続けるように」認識させ続ける命令。
+RemainAfterExit=yes
+
+#2-3 
+#フォルダ(/var/www/django-appにdocker-compose.yml設計図がある)に移動後、下記の起動コマンドを実行しろ」指示。
+WorkingDirectory=/var/www/django-app
+
+#2-4 Djangoアプリを起動『直前』に、Linux側の古いNginxが邪魔なので絶対に停止させろ」という前処理の命令。
+ExecStartPre=/usr/bin/systemctl stop nginx
+
+#2-5 Docker Composeを使用して、コンテナ（DjangoやNginxの部屋）を裏側（バックグラウンド）で一斉起動しろ」という、本番の起動命令。
+ExecStart=/usr/local/bin/docker-compose up -d
+
+#2-6 停止時は、動いているコンテナ（部屋）をすべて安全に削除しろ」という、停止時の片付け命令。
+ExecStop=/usr/local/bin/docker-compose down
+
+
+[Install]　#3 自動起動設定を、Linuxシステム全体のどのタイミング（フェーズ）に組み込むか」を記述する(開始宣言)
+
+#3-1　Linuxの電源ON時、普通（マルチユーザーモード）の画面で、Djangoアプリも全自動起動させろ」(常時自動起動の命令)。 
+#これでパソコンが再起動しても、勝手にDjangoアプリが復活するようになる。
+
+WantedBy=multi-user.target
+
+

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'list' %}">一覧</a></li>
+    <li class="breadcrumb-item active" aria-current="page">詳細</li>
+  </ol>
+</nav>
+
+<div class="card shadow">
+    <div class="card-header bg-primary text-white">
+        <h2 class="h5 mb-0">タスク詳細</h2>
+    </div>
+
+    <div class="card-body">
+        <h3 class="display-6">{{ object.title }}</h3>
+        <hr>
+        <p class="lead text-secondary">{{ object.memo }}</p>
+
+        <h2>{{ object.title }}</h2> 
+        <p>{{ object.memo }}</p> 
+
+    </div>
+
+    <div class="card-footer bg-white">  ###
+        <a href="{% url 'update' object.pk %}" class="btn btn-warning">編集</a>
+        <a href="{% url 'delete' object.pk %}" class="btn btn-danger">削除</a>
+        <a href="{% url 'list' %}" class="btn btn-secondary">戻る</a>
+    </div>
+</div>
+{% endblock content %}

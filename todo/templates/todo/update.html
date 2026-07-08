@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">保存する</button>
+    <a href="{% url 'detail' object.pk %}" class="btn btn-secondary">戻る</a>
+</form>
+{% endblock content %}
