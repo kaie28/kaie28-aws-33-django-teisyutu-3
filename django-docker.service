@@ -25,8 +25,7 @@ Type=oneshot
 RemainAfterExit=yes
 
 
-#2-3 
-#フォルダ(/var/www/django-appにdocker-compose.yml設計図がある)に移動後、起動コマンドを実行しろ」指示。
+#2-3 フォルダ(/var/www/django-appにdocker-compose.yml設計図がある)に移動後、起動コマンドを実行しろ」指示。
 WorkingDirectory=/var/www/django-app
 
 
