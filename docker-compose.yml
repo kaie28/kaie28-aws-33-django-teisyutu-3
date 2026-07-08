@@ -1,29 +1,30 @@
-#内装構築の全体の設計図
+#内装構築の全体設計図
 
-#これからAWSサーバーの中に2つの部屋（コンテナ=web(Django) と nginxの2つ）を作ります」という宣言。
+#【AWSサーバーに（2つのコンテナである「web(Django)」 と 「nginx」）を作るよ」宣言】
+
+
 services:
-  web:       　　　　　　 　　　　　　　　　　　　#←1つ目にweb: エリア（Djangoが動く部屋＝奥の部屋）
-    build: .　　　　　　　　　　　　　　　　　　　#←今いる場所（.）にある説明書（Dockerfile）を使って、Djangoの部屋の土台を組み立てろ」という指示
-    volumes:                                  #←☆☆文字データ、CSS、画像をそれぞれの専用倉庫に繋ぐ命令。
-      - db_volume:/usr/src/app/db_data/　　　 #☆☆←文字専用倉庫（DB=db_data）専用の倉庫を連結(※Djangoのsetting.pyのDATABASESと連結と本設計(下記のvolumes参照)で、本番環境で文字書きえない設定。
-      - static_volume:/usr/src/app/static/　　#←CSS専用倉庫の連結命令(★本番/開発両方ともON) 
-      - media_volume:/usr/src/app/media/　　　#←画像専用倉庫の連結命令
-    environment:
-      - DEBUG=0　　　　　　　　　　　　　　　　　#←★本番モードではデバックは0(False) / 開発モードでは1(True)に設定する。
-      - MY_IP=${MY_IP}　　　　　　　　　　　　　#←★自分のIP(=My IP)を、変数で隠す　
-    command: gunicorn todoproject.wsgi:application --bind 0.0.0.0:8000 　#←Nginxのみ、Django内線番号8000番へ入る設定
+  web:       　　　　　　 　　　　　　　　　　　　　　　　　　　　　　　　     #★1【web: エリア（Django部屋）】
+    build: .　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　         #1-1今いる場所（.）にある説明書（Dockerfile）で、Django部屋の土台を組み立てろ」という指示
+    volumes:                                  　　　　　　　　　　　　　        #1-2文字データ、CSS、画像を各専用倉庫に繋ぐ命令。
+      - db_volume:/usr/src/app/db_data/　　　 　　　　　　　　　　              #1-3  文字専用倉庫（DB=db_data）(※Django「setting.pyのDATABASES」と、Docker拡張機能「volume」で連結)。
+      - static_volume:/usr/src/app/static/　　                                #1-4  CSS専用倉庫の連結命令(★本番/開発両方ともON) 
+      - media_volume:/usr/src/app/media/　　　                                #1-5  画像専用倉庫の連結命令
+    environment:                                                           #★2【変数化など】   
+      - DEBUG=0　　　　　　　　　　　　　　　　　                             　 #2-1 デバック本番モードでは0(False) / 開発モードでは1(True)に設定】
+      - MY_IP=${MY_IP}　　　　　　　　　　　　　                                #2-2 IPを変数化　
+    command: gunicorn todoproject.wsgi:application --bind 0.0.0.0:8000 　　　 #2-3  Nginxのみ（Django内線番号8000番へ入る設定）
 
-  nginx:　　　　　　　　　　　　　　　　　 #←2つ目にnginx: エリア（お客さんを迎える　80番の外窓口）
-    build: ./nginx　　　　　　　　　　　　#←nginx (nginx/Dockerfile設計図)の2行を元に、面玄関を組み立てろ」という命令
-    ports:                            　#← 80番から来たお客さんを、このNginxの外窓口の80番ポートにそのまま通せの指示
+  nginx:　　　　　　　　　　　　　　　　　 　　　　　　　　　　　　　　　　　　   #★3【nginx:エリア(客を迎える80番窓口）】
+    build: ./nginx　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　   #3-1　nginx (nginx/Dockerfile設計図)の2行目を元に、面玄関を組み立てろ」という命令
+    ports:                            　　　　　　　　　　　　　　　　　　　　   #3-2　外部の80番から来た客を、このNginxの窓口の80番ポートにそのまま通せの指示
       - "80:80"
-    volumes:　　　　　　　　　　　　　　　#←2つの部屋コンテナ(NginxとDjango)を繋ぐ、共有の倉庫(=静的ファイル用css・画像用)
-      - static_volume:/usr/src/app/static/　#←Django側（又はNginx側）のcssを保存する格納倉庫(=/usr/src/app/static/)。 共有倉庫.荷物のやり取り場(=static_volume)
-      - media_volume:/usr/src/app/media/　　#←ユーザーがアップロードした画像などが保存される場所(=/usr/src/app/media/)。　共有倉庫.荷物のやり取り場(=media_volume)
-    depends_on:　　　　　　　　　　　　　#★web（Django）→Nginx等の順番で起動しろ」という命令(=起動の順番を固定する)
-      - web
+    volumes:　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　#★4【2つのコンテナ(NginxとDjango)を繋ぐ、★共有倉庫(=静的ファイル用css・画像用)】
+      - static_volume:/usr/src/app/static/　　　　　　　　　　　　　　　　　 　  #4-1　Django側（又はNginx側）のcssを保存する格納倉庫(=/usr/src/app/static/)。 共有倉庫.荷物のやり取り場(=static_volume)
+      - media_volume:/usr/src/app/media/　　　　　　　　　　　　　　　　　　 　  #4-2  ユーザーがアップロードした画像の保存場所(=/usr/src/app/media/)。　共有倉庫.荷物のやり取り場(=media_volume)
+    depends_on:　　　　　　　　　　　　　                                   　  #4-3　web（Django）→Nginx等の★順番で起動しろ」命令(=起動の順番固定)
+      - web　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 
-volumes:　　　　　　　　　　　　　　　　　#←☆☆コンテナとは完全独立した(＝文字や画像データが消されず守れる)、データ保存専用の『倉庫の土台』をパソコン内に作れ」という全体への宣言。
-  static_volume:　　　　　　　　　　　　 #←CSS専用倉庫(静的ファイル（CSS）等)の本体を作る命令
-  media_volume:　　　　　　　　　　　　　#←画像専用倉庫(ユーザーが投稿した画像等)」を再起動しても絶対に画像は消えず保存されるように、の本体を作る命令。
-　db_volume:　　　　　　　　　　　　　　　#☆☆←文字データ倉庫の土台を自動作成するので、再起動しても文字が消えない設定になる。
+volumes:　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　#★5【Dockerコンテナの影響受けずに(＝文字や画像保持の持続)、データ保存専用『倉庫の土台』をパソコン内に作れ」の全体宣言】
+  media_volume:　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 #5-1 画像専用倉庫(ユーザーが投稿した画像等)」をコンテナが再起動しても消えず保存されるための本体を作る。
+　db_volume:　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　      #5-2 文字専用倉庫の土台を自動作成(Dockerコンテナが再起動しても文字が消えない設定)
