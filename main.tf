@@ -4,19 +4,20 @@
 
 #1-A,プロバイダー設定
 provider "aws" {
-  region = "ap-northeast-1"  #←★東京リージョン
+  region = "ap-northeast-1"  　　　    #東京リージョン
 }
 
-#1-B, amiを最新を自動で探せるようにする。
-#名前の指定を確実にヒットする形に変更
+
+#1-B, amiの最新を常に自動で探す。
+
 data "aws_ami" "recent_amazon_linux_2023" {
   most_recent = true
   owners      = ["amazon"]
 
   filter {
     name   = "name"
-    values = ["al2023-ami-*-x86_64"] 
-  }    # ↑「al2023-ami-」で始まって「x86_64」で終わるものを探す
+    values = ["al2023-ami-*-x86_64"]         # 「al2023-ami-」で始まって「x86_64」で終わるものを探す。
+  }    
 }
 
 #1-C, (SSH22番の自分用) →#8へ(EC2にその部品を取り付ける)
