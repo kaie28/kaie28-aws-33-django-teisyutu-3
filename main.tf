@@ -20,7 +20,7 @@ data "aws_ami" "recent_amazon_linux_2023" {
 }
 
 
-# ★2【自動でSSH作成(★現在は全ての機能中止)】→ main.tf#8へ(EC2にその部品を取り付ける)】
+# ★2【自動でSSH作成(★現在は全ての機能中止し、手動SSHへ移行)】→ main.tf#8へ(EC2にその部品を取り付ける)】
 
 # 2-1 【Terraform(工場)が、自動でpem（カギ)と.pub(鍵穴)を作る。】　　　　　　　　　　　　　　　　　　　　　　　　　　#2-1は機能中止にした。【自動でゼロから「SSHの鍵や鍵穴」を製造】
 #resource "tls_private_key" "keygen" {
