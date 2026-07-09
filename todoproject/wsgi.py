@@ -28,3 +28,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'todoproject.settings')
 
 # 5-3　【実行】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 #5-3 【get_wsgi_application() ＝翻訳プログラム】　【application　＝名前の本番モード用受付窓口（変数）】
 application = get_wsgi_application)　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　#5-2で教えたルール（settings）を基に、外部データを受け取る「本番モードのapplication（受付窓口）を★正式に起動」する。
+
+
+
+
+
