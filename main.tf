@@ -103,12 +103,12 @@ resource "aws_security_group" "sg" {
   }　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 
-  #6-3 客に全員公開専用。外からサーバーへのみ（80番表口）　# 全員に公開
+  #6-3 客に全員専用。外からサーバーへのみ（80番表口）　# 全員に公開
   ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [var.allow_all] 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# 6-3 客さん全員に公開
+    cidr_blocks = [var.allow_all] 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# 6-3 客さん全員を受け入れる。
   }
 
 
