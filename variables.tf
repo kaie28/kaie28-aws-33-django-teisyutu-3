@@ -49,7 +49,7 @@ variable "allow_all" {
 
 
 # 6. SSM(金庫)利用時に、EC2の許可証(IAM＝バッチ)を入れる箱→ main.tfファイル#7のnameのとこへ。
-# variables.tfファイル(箱)がない時、IPアドレスが変わるたび、main.tfファイル書き直す必要があった。★現在は変数化で、terraform.tfvars(秘密保管庫) → 直接main.tfファイルへ流せる(省略できる)。
+# main.tf を直接いじらず、安全に設定値を変えるための箱。【★variables.tfでの変数化で、tfvars（本物の秘密情報） ➔ variables.tf（ただの箱） ➔ main.tf（使う場所）へ】
 
 
 variable "iam_role_name" {
