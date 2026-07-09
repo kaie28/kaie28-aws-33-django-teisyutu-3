@@ -24,8 +24,10 @@ output "admin_url" {
 
 
 
-#4 22番接続に使うためのカギ（秘密鍵）を画面に出力する設定。※【確認】main.tfファイルの#8-5 と同じ名前　　
-output "private_key" {　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# SSH接続に必要なカギのデータそのものを画面に出せる。
-  value     = tls_private_key.ssm-key-kaie28.private_key_pem　　　　　　　　　　　　　　　　　　　　　　　# カギの暗号テキストを画面に出力する。
-  sensitive = true　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　#本番・開発でも、必ず true にする。秘密情報を見えなくできる。
-}
+#4 22番接続に使うためのカギ（秘密鍵）を画面に出力する設定。※【確認】main.tfファイルの#8-5 と同じ名前　
+#.pemファイルキーの自動版なのでコメントアウトで中止する。（★現在は手動での鍵を使用中）
+
+#output "private_key" {　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# SSH接続に必要なカギのデータそのものを画面に出せる。
+  #value     = tls_private_key.ssm-key-kaie28.private_key_pem　　　　　　　　　　　　　　　　　　　　　　　# 本番・開発でも、必ず true にする。秘密情報を目隠し出来る。
+  #sensitive = true　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+#}
