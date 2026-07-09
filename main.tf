@@ -138,7 +138,7 @@ resource "aws_iam_role" "ssm_role" {                                            
 }
 
 
-#7-2,【(EC2にSSM許可を与えるまで)】※EC2がSSM権限も持てるようにする                         #7-2 ※variables.tf のnameと合致
+#7-2,【(EC2にSSM許可を与えるまで)】※EC2がSSM権限も持てるようにする                         #7-2 ※#7-1 で作った身分証（ロール）の名前と合致。【全体的】tfvars ➔ variables.tf ➔ main.tf　
 resource "aws_iam_role_policy_attachment" "ssm_attach" {　　　　　　　　　　　　　　　　　　 
   role       = aws_iam_role.ssm_role.name　　　　　　　　　　　　　　　　　　　　　　　　　　　# role は、この身分証（aws_iam_role.ssm_role）を指定するの意味
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"   　　　　　　　　　　# policy (ルール本)。 policy_arnSSM (ルール本の住所) 。　※身分証（ロール）に合体させる
@@ -146,7 +146,7 @@ resource "aws_iam_role_policy_attachment" "ssm_attach" {　　　　　　　　
 
 
 # 7-3.【(SSM権限バッジ付きのホルダ作成まで)】※EC2にSSM権限バッジをつける
-resource "aws_iam_instance_profile" "ssm_profile" {                                     #7-3　※variables.tf のnameと合致
+resource "aws_iam_instance_profile" "ssm_profile" {                                     #7-3　※#7-1 で作った身分証（ロール）の名前と合致。【全体的】tfvars ➔ variables.tf ➔ main.tf　　
   name = "todo-ssm-profile-v3" 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# todo-ssm-profile-v3という名前の身分証を入れる袋(instance_profile)
   role = aws_iam_role.ssm_role.name                                                   　　　# roleは、身分証そのもの（ロール＝ssm_role）
 }
