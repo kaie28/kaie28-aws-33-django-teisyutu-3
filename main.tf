@@ -4,7 +4,7 @@
 
 # 1-1,プロバイダー設定
 provider "aws" {
-  region = "ap-northeast-1"  　　　       　　  　　　　　　　　　　　　　      # 1-1　東京リージョン
+  region = "ap-northeast-1"  　　　       　　  　　　　　　　　　　　　　      　　　　　　　　　　　　　　    # 1-1　東京リージョン
 }
 
 
@@ -15,7 +15,7 @@ data "aws_ami" "recent_amazon_linux_2023" {
 
   filter {
     name   = "name"
-    values = ["al2023-ami-*-x86_64"]             　　　　　　　　　　　　　     # 1-2 「al2023-ami-」で始まって「x86_64」で終わるものを探す。
+    values = ["al2023-ami-*-x86_64"]             　　　　　　　　　　　　　     　　　　　　　　　　　　　　    # 1-2 「al2023-ami-」で始まって「x86_64」で終わるものを探す。
   }    
 }
 
@@ -38,7 +38,7 @@ resource "aws_key_pair" "ssm-key-kaie28" {
 # 2-3 手動で作成した.pem鍵(SSH接続で使う.pemファイル（private_key）＝★秘密鍵)を、裏で保管する。
 output "private_key" {
   value     = tls_private_key.keygen.private_key_pem
-  sensitive = true　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# 2-3 開発でも本番でも true 設定は必須（秘密鍵が目隠しになるため)※.tfstateファイルに本物の秘密鍵を保管する。
+  sensitive = true　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　   # 2-3 開発でも本番でも true 設定は必須（秘密鍵が目隠しになるため)※.tfstateファイルに本物の秘密鍵を保管する。
 }　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 
@@ -60,12 +60,12 @@ resource "aws_internet_gateway" "gw" {
 
 # ★5.【サブネット～ルートテーブル】
 
-# 5-1,パブリックサブネット(ネットと直通してる区画/道路）※2つのサーバー【WEB(Nginx)＋Djangoの区画範囲内】　　　　　　　※【補足】逆にネットに通らないのはプライべートサブネット
+# 5-1,パブリックサブネット(ネットと直通してる区画/道路）※2つのサーバー【WEB(Nginx)＋Djangoの区画範囲内】　　　　　　　#※【補足】逆にネットに通らないのはプライべートサブネット
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.main.id 
   cidr_block              = "10.0.1.0/24"   
   map_public_ip_on_launch = true                                          
-  availability_zone       = "ap-northeast-1c"       　　　　　   　　　　　　　　　# 5-1 東京リージョン/SSMが確実に即時起動するcゾーン
+  availability_zone       = "ap-northeast-1c"       　　　　　   　　　　　　　　　　　　　　　　　　　　　　　　　　# 5-1 東京リージョン/SSMが確実に即時起動するcゾーン
   tags                    = { Name = "todo-subnet" }
 }
 
@@ -95,7 +95,7 @@ resource "aws_security_group" "sg" {
   vpc_id = aws_vpc.main.id 
 
 
-#6-2 自分のみ専用。外からサーバーへのみ(※EC2にSSH22番のみ通す設定)　　　　　　　　　　  #6-2
+#6-2 自分のみ専用。外からサーバーへのみ(※EC2にSSH22番のみ通す設定)　　　　　　　　　　  #6-2  自分のみ専用
   ingress {                                                                          # 【MyIPでの流れ】tfvars（本物のIP）→　variables.tf(自分のPCのネット上住所=MyIP)のみをただの空箱に入れて　→　main.tfのEC2に繋げる。
     from_port   = 22                                                                 #【手動SSHでの流れ】tfvars（本物の.pemキー） ➔ variables.tf(.pemキーのただの入れ物) ➔ main.tfの#6へ 　で鍵の名前を渡す。
     to_port     = 22                                                                 #　※【補足】自動SSHは中止した(★更新などで、GitHab経由にて秘密情報が流出する危険性があるため。outputs.tfの#4はコメントアウトで機能停止済み)
@@ -204,14 +204,14 @@ lifecycle {
 # 10-1 シークレットキー
 resource "aws_ssm_parameter" "django_secret_key" { 
   name  = "/django-v3/SECRET_KEY"
-  type  = "SecureString" 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# SecureString 暗号化ありの保存する設定
+  type  = "SecureString" 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# SecureString 暗号化ありの保存する設定
   value = var.django_secret_key
 }
 
 # 10-2 デバッグ
 resource "aws_ssm_parameter" "django_debug" {
   name  = "/django-v3/DEBUG"      
-  type  = "String" 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# String 暗号化なしの通常文字列で保存する設定
+  type  = "String" 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# String 暗号化なしの通常文字列で保存する設定
   value = var.django_debug
 }
 
