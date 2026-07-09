@@ -1,5 +1,5 @@
 
-# 【Terraform 関連】
+# ★1【Terraform 関連】
 # ①プラグインフォルダ（terraform initで作成される）
 .terraform/
 
@@ -25,7 +25,7 @@ crash.log
 
 
 
-# 【Python / Django 関連】
+# ★2【Python / Django 関連】
 
 # ①コンパイルされたキャッシュファイル
 __pycache__/
@@ -39,13 +39,13 @@ db.sqlite3
 .env
 
 
-#【AWS 認証情報と機密情報（AWSのシークレットキーなど）】
+#★3【AWS 認証情報と機密情報（AWSのシークレットキーなど）】
 .aws/
 credentials
 access_token
 
 
-# 【OS / エディタ 関連 (Windows/Mac/VSCode)】
+#★4 【OS / エディタ 関連 (Windows/Mac/VSCode)】
 
 .DS_Store
 Thumbs.db
