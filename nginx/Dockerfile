@@ -22,11 +22,11 @@ COPY default.conf /etc/nginx/conf.d/default.conf
 RUN chown nginx:nginx /etc/nginx/conf.d/default.conf
 
 
-#6,【Nginxが起動中に使う「自分のIDメモ（PIDファイル）」の置き場所を、安全な一時フォルダ（/tmp）へ移動する】
+#6,【Nginxが起動中に使う「自分のIDメモ（PIDファイル）」の★置き場所を、安全な一時フォルダ（/tmp）へ移動する】
 RUN sed -i 's|/var/run/nginx.pid|/tmp/nginx.pid|g' /etc/nginx/nginx.conf
 
 
-#7,【これ以降のすべての命令やWEBサーバーの起動を、最高権限（root）から一般ユーザー（nginx）に切り替える(※安全のため)】
+#7,【これ以降のすべての命令やWEBサーバーの起動を、最高権限（root）から★一般ユーザー（nginx）に切り替える(※安全のため)】
 USER nginx
 
 
