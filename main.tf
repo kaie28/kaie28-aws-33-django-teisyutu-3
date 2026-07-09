@@ -138,7 +138,7 @@ resource "aws_iam_role" "ssm_role" {                                            
 }
 
 
-#7-2,【(EC2にSSM許可を与えるまで)】※EC2がSSM権限も持てるようにする                         #7-2 ※#7-1 で作った身分証（ロール）の名前と合致。【全体的】tfvars ➔ variables.tf ➔ main.tf　
+#7-2,【(EC2にSSM許可を与えるまで)】※EC2がSSM権限も持てるようにする                         #7-2 ※#7-1 で作った身分証（ロール）の名前と合致。【全体的】tfvars(本物秘密情報) ➔ variables.tf(ただの箱) ➔ main.tfへ　
 resource "aws_iam_role_policy_attachment" "ssm_attach" {　　　　　　　　　　　　　　　　　　 
   role       = aws_iam_role.ssm_role.name　　　　　　　　　　　　　　　　　　　　　　　　　　　# role は、この身分証（aws_iam_role.ssm_role）を指定するの意味
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"   　　　　　　　　　　# policy (ルール本)。 policy_arnSSM (ルール本の住所) 。　※身分証（ロール）に合体させる
