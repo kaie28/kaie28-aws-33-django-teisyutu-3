@@ -126,7 +126,7 @@ resource "aws_security_group" "sg" {
 
 #7-1,【(SSM身分証明書の作成)】※空のSSM身分許可証を発行
 resource "aws_iam_role" "ssm_role" {                                                  #7-1
-  name = "${var.iam_role_name}-v3"       　　　　　　　　　　　　　　　　　　　　　　 　　　 # 空の身分証（IAMロール）の名前({var.iam_role_name}-v3)。　※variables.tfファイルの#6のname　へ
+  name = "${var.iam_role_name}-v3"       　　　　　　　　　　　　　　　　　　　　　　 　　　 # 空の身分証（IAMロール）の名前({var.iam_role_name}-v3)。　※variables.tfファイルの#6のname
   assume_role_policy = jsonencode({                                
     Version = "2012-10-17"
     Statement = [{
