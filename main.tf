@@ -20,26 +20,27 @@ data "aws_ami" "recent_amazon_linux_2023" {
 }
 
 
-# ★2, 【SSH22番 →#8へ(EC2にその部品を取り付ける)】
+# ★2, 【自動でSSH繋ぐための鍵と鍵穴を生成 → main.tf#8へ(EC2にその部品を取り付ける)】
 
-# 2-1 Terraform(工場)が、pem（カギ)と.pub(鍵穴)を自動で作る。
-resource "tls_private_key" "keygen" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
+# 2-1 Terraform(工場)が、自動でpem（カギ)と.pub(鍵穴)を作る。　　　　　　　　　　　　　　　　　　　　　　　　　　　#2-1は機能中止にした。【自動でゼロから「鍵や鍵穴」を製造】
+#resource "tls_private_key" "keygen" {
+#  algorithm = "RSA"
+#  rsa_bits  = 4096
+#}
 
 
-#2-2 pub（鍵穴＝★公開鍵(public_key)→#8へ）をEC2に取り付ける。
-resource "aws_key_pair" "ssm-key-kaie28" {
-  key_name   = "my-ssh-key-v4"
-  public_key = tls_private_key.keygen.public_key_openssh
-}
+#2-2 自動で　pub「鍵穴」【(public_key)＝★公開鍵　→main.tf#8へ）をEC2に取り付ける】                         　　　#2-2は機能中止にした。【自動で「鍵穴」をAWSに設置】
+#resource "aws_key_pair" "ssm-key-kaie28" {
+#  key_name   = "my-ssh-key-v4"
+#  public_key = tls_private_key.keygen.public_key_openssh
+#}
 
-# 2-3 手動で作成した.pem鍵(SSH接続で使う.pemファイル（private_key）＝★秘密鍵)を、裏で保管する。
-output "private_key" {
-  value     = tls_private_key.keygen.private_key_pem
-  sensitive = true　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　   # 2-3 開発でも本番でも true 設定は必須（秘密鍵が目隠しになるため)※.tfstateファイルに本物の秘密鍵を保管する。
-}　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+
+# 2-3 自動で.pem「鍵」【(private_key）＝★秘密鍵】を裏で保管する。　　　　　　　　　　　　　　　　　　　　　　　　　　#2-3は機能中止にした。【自動で「鍵」を隠しながら画面表示させる】
+#output "private_key" {
+# value     = tls_private_key.keygen.private_key_pem
+#  sensitive = true　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　   # 2-3 開発でも本番でも true 設定は必須（秘密鍵が目隠しになるため)※.tfstateファイルに本物の秘密鍵を保管する。
+#}　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 
 # ★3. 【ネットワーク (VPC＝セキュリティ無関係の、ただの大箱)】
