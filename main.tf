@@ -190,7 +190,7 @@ key_name = "ssm-key-kaie28"
   　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 lifecycle {
     ignore_changes = [
-      ami, 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　#9、★4つの項目
+      ami, 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　#9、★4つの項目【※その度にEC2サーバーが変更されないように予防】
       subnet_id,
       vpc_security_group_ids,
       associate_public_ip_address
