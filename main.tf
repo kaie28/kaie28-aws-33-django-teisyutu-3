@@ -98,7 +98,7 @@ resource "aws_security_group" "sg" {
 #6-2 自分のみ専用。外からサーバーへのみ(※EC2にSSH22番のみ通す設定)　　　　　　　　　　  #6-2  自分のみ専用
   ingress {                                                                          # 【MyIPでの流れ】tfvars（本物のIP）→　variables.tf(自分のPCのネット上住所=MyIP)のみをただの空箱に入れて　→　main.tfのEC2に繋げる。
     from_port   = 22                                                                 #【手動SSHでの流れ】tfvars（本物の.pemキー） ➔ variables.tf(.pemキーのただの入れ物) ➔ main.tfの#6へ 　で鍵の名前を渡す。
-    to_port     = 22                                                                 #　※【補足】自動SSHは中止した(★更新などで、GitHab経由にて秘密情報が流出する危険性があるため。★outputs.tf「鍵」#4と、★variables.tf「鍵穴」#5はコメントアウトで機能停止済み)
+    to_port     = 22                                                                 #　※【補足】自動SSHは中止した(★更新などで、GitHab経由にて秘密情報が流出する危険性があるため。★outputs.tf「鍵」#4と、★variables.tf「鍵穴」#5は機能停止済み)
     cidr_blocks = ["${var.my_ip}/32"] 　　　　　　　　　　　　　　　　　　　　　　　　　
   }　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
