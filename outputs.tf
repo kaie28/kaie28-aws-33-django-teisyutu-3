@@ -28,6 +28,6 @@ output "admin_url" {
 #.pemファイルキーの★自動版なのでコメントアウトで使用不可にする（★現在は手動での .pemファイルを使用中）
 
 #output "private_key" {　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# SSH接続に必要なカギのデータそのものを画面に出せる。
-  #value     = tls_private_key.ssm-key-kaie28.private_key_pem　　　　　　　　　　　　　　　　　　　　　　　# 本番・開発でも、必ず true にする。秘密情報を目隠し出来る。
-  #sensitive = true　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+#  value     = tls_private_key.ssm-key-kaie28.private_key_pem　　　　　　　　　　　　　　　　　　　　　　　# 本番・開発でも、必ず true にする。秘密情報を目隠し出来る。
+#  sensitive = true　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 #}
