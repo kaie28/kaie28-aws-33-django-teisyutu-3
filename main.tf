@@ -35,7 +35,7 @@ resource "aws_key_pair" "ssm-key-kaie28" {
   public_key = tls_private_key.keygen.public_key_openssh
 }
 
-# 2-3 手動で作った鍵(SSH接続で使う.pemファイル（private_key）＝★秘密鍵)を、裏で保管する。
+# 2-3 手動で作成した.pem鍵(SSH接続で使う.pemファイル（private_key）＝★秘密鍵)を、裏で保管する。
 output "private_key" {
   value     = tls_private_key.keygen.private_key_pem
   sensitive = true　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# 2-3 開発でも本番でも true 設定は必須（秘密鍵が目隠しになるため)※.tfstateファイルに本物の秘密鍵を保管する。
@@ -95,14 +95,13 @@ resource "aws_security_group" "sg" {
   vpc_id = aws_vpc.main.id 
 
 
-#6-2 自分のみ専用。外からサーバーへのみ(※EC2にSSH22番のみ通す設定)　
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["${var.my_ip}/32"] 　　　　　　　　　　　　　　　　　　　　　　　　　　# tfvars（本物のIP）→　variables.tf(自分のPCのネット上住所=MyIP)のみをただの空箱に入れて　→　main.tfのEC2に繋げる。
-  }　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# tfvars（本物の.pemキー）→ outputs.tfの#4で秘密情報用の目隠し箱。→ main.tfの#6へ渡す
-
+#6-2 自分のみ専用。外からサーバーへのみ(※EC2にSSH22番のみ通す設定)　　　　　　　　　　  #6-2
+  ingress {                                                                          # 【MyIPでの流れ】tfvars（本物のIP）→　variables.tf(自分のPCのネット上住所=MyIP)のみをただの空箱に入れて　→　main.tfのEC2に繋げる。
+    from_port   = 22                                                                 #【手動SSHでの流れ】tfvars（本物の.pemキー） ➔ variables.tf(.pemキーのただの入れ物) ➔ main.tfの#6へ 　で鍵の名前を渡す。
+    to_port     = 22                                                                 #　※【補足】自動SSHは中止した(★更新などで、GitHab経由にて秘密情報が流出する危険性があるため。outputs.tfの#4はコメントアウトで機能停止済み)
+    cidr_blocks = ["${var.my_ip}/32"] 　　　　　　　　　　　　　　　　　　　　　　　　　
+  }　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 
   #6-3 客に全員公開専用。外からサーバーへのみ（80番表口）　# 全員に公開
   ingress {
