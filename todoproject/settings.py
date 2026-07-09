@@ -83,7 +83,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'todoproject.wsgi:application'
 
 
-#★ 3 文字データ等の安全保管庫の住所を設定。　　　　　　　　　　　　　　　#3、Docker(コンテナ)が再構築・破壊されても、ToDoアプリの文字データ等が消えないため
+#★ 3 文字データ等の安全保管庫の住所を設定。　　　　　　　　　　　　　　　#3、Docker(コンテナ)が再構築・破壊されても、ToDoアプリ(お客さんの更新時など)の文字データ等が消えないようにするため
 
 DATABASES = {
     'default': {
