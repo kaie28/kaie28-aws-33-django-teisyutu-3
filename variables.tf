@@ -49,8 +49,8 @@ variable "allow_all" {
 
 
 # 6. SSM(金庫)利用時に、EC2の許可証(IAM＝バッチ)を入れる箱→ main.tfファイル#7のnameのとこへ。
-# main.tf を直接いじらず、安全に設定値を変えるための箱。【★variables.tfでの変数化で、tfvars（本物の秘密情報） ➔ variables.tf（ただの箱） ➔ main.tf（使う場所）へ】
-#variables.tfにある【iam_role_name】名前と　➔  main.tfの#7にある　【${var.iam_role_name}-v3】と【aws_iam_role.ssm_role.name　iam_role_name】でnameの合致。
+# main.tf を直接いじらず、安全に設定値を変えるための箱。【★tfvars（本物の秘密情報） ➔ variables.tf（ただの箱） ➔ main.tf（使う場所）へ】
+#variables.tfにある【iam_role_name】の名前　➔  main.tfの#7 の【${var.iam_role_name}-v3】と【aws_iam_role.ssm_role.name　iam_role_name】でnameのとこへ。
 
 variable "iam_role_name" {
   description = "SSM用のIAMロール名"
