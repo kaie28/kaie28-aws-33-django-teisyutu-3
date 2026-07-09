@@ -4,7 +4,7 @@
 
 # 1-1,プロバイダー設定
 provider "aws" {
-  region = "ap-northeast-1"  　　　       　　  　　　　　　　　　　　　　      　　　　　　　　　　　　　　    # 1-1　東京リージョン
+  region = "ap-northeast-1"  　　　       　　  　　　　　　　　　　　　　      　　　　　　　　　　　　　　    　# 1-1　東京リージョン
 }
 
 
@@ -15,12 +15,12 @@ data "aws_ami" "recent_amazon_linux_2023" {
 
   filter {
     name   = "name"
-    values = ["al2023-ami-*-x86_64"]             　　　　　　　　　　　　　     　　　　　　　　　　　　　　    # 1-2 「al2023-ami-」で始まって「x86_64」で終わるものを探す。
+    values = ["al2023-ami-*-x86_64"]             　　　　　　　　　　　　　     　　　　　　　　　　　　　　    　# 1-2 「al2023-ami-」で始まって「x86_64」で終わるものを探す。
   }    
 }
 
 
-# ★2【自動でSSH作成】→ main.tf#8へ(EC2にその部品を取り付ける)】
+# ★2【自動でSSH作成(★現在は全ての機能中止)】→ main.tf#8へ(EC2にその部品を取り付ける)】
 
 # 2-1 【Terraform(工場)が、自動でpem（カギ)と.pub(鍵穴)を作る。】　　　　　　　　　　　　　　　　　　　　　　　　　　#2-1は機能中止にした。【自動でゼロから「SSHの鍵や鍵穴」を製造】
 #resource "tls_private_key" "keygen" {
