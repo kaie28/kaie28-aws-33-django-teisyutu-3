@@ -39,10 +39,10 @@ resource "aws_key_pair" "ssm-key-kaie28" {
 output "private_key" {
   value     = tls_private_key.keygen.private_key_pem
   sensitive = true　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# 2-3 開発でも本番でも true 設定は必須（秘密鍵が目隠しになるため)※.tfstateファイルに本物の秘密鍵を保管する。
-}
+}　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 
-
-# ★3. 【ネットワーク (VPC＝セキュリティ関係ない、ただの大箱)】
+# ★3. 【ネットワーク (VPC＝セキュリティ無関係の、ただの大箱)】
 resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
@@ -100,8 +100,8 @@ resource "aws_security_group" "sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${var.my_ip}/32"] 　　　　　　　　　　　　　　　　　　　　　　　　　　# 6-2 変数化(terraform.tfvarsファイルに本物を保管)
-  }
+    cidr_blocks = ["${var.my_ip}/32"] 　　　　　　　　　　　　　　　　　　　　　　　　　　# tfvars（本物のIP）→　variables.tf(自分のPCのネット上住所=MyIP)のみをただの空箱に入れて　→　main.tfのEC2に繋げる。
+  }　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# tfvars（本物の.pemキー）→ outputs.tfの#4で秘密情報用の目隠し箱。→ main.tfの#6へ渡す
 
 
   #6-3 客に全員公開専用。外からサーバーへのみ（80番表口）　# 全員に公開
