@@ -205,14 +205,14 @@ lifecycle {
 # 10-1 シークレットキー
 resource "aws_ssm_parameter" "django_secret_key" { 
   name  = "/django-v3/SECRET_KEY"
-  type  = "SecureString" 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# SecureString 暗号化ありの保存する設定
+  type  = "SecureString" 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　#10-1、SecureString 暗号化ありの保存する設定
   value = var.django_secret_key
 }
 
 # 10-2 デバッグ
 resource "aws_ssm_parameter" "django_debug" {
   name  = "/django-v3/DEBUG"      
-  type  = "String" 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# String 暗号化なしの通常文字列で保存する設定
+  type  = "String" 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　#10-2、String 暗号化なしの通常文字列で保存する設定
   value = var.django_debug
 }
 
